@@ -40,6 +40,9 @@ const schema = new mongoose.Schema(
 );
 
 const Post = mongoose.model("Post", schema);
+app.get("/favicon.ico", (req, res) => {
+  res.sendStatus(204); // Send a No Content response (204) for favicon.ico requests
+});
 
 app.get("/", async (req, res) => {
   const posts = await Post.find();
