@@ -1,18 +1,23 @@
 {
-    "version": 2,
-    "regions": ["cdg1"],
-    "builds": [
-      {
-        "src": "index.js",
-        "use": "@vercel/node"
+  "version": 2,
+  "regions": ["cdg1"],
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "index.js",
+      "methods": ["GET", "POST", "PATCH", "DELETE"],
+      "headers": {
+        "cache-control": "s-maxage=1, stale-while-revalidate"
+      },
+      "config": {
+        "maxDuration": 30
       }
-    ],
-    "routes": [
-      {
-        
-        "src": "/(.*)",
-        
-        "dest": "index.js"
-      }
-    ]
-  }
+    }
+  ]
+}
