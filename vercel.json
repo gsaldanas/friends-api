@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "regions": ["cdg1", "eu-west-3"], 
+  "regions": ["cdg1"], 
   "builds": [
     {
       "src": "index.js",
