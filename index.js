@@ -45,8 +45,13 @@ app.get("/favicon.ico", (req, res) => {
 });
 
 app.get("/", async (req, res) => {
-  const posts = await Post.find();
-  res.json(posts);
+  try {
+    const posts = await Post.find();
+    res.json(posts);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 app.get("/:id", async (req, res) => {
@@ -66,8 +71,13 @@ app.get("/:id", async (req, res) => {
 
 app.post("/", async (req, res) => {
   const post = new Post(req.body);
-  await post.save();
-  res.json(post);
+  try {
+    await post.save();
+    res.json(post);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 app.delete("/:id", async (req, res) => {
@@ -99,6 +109,12 @@ app.patch("/:id", async (req, res) => {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
   }
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: "Internal server error" });
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}...`));
